@@ -21,20 +21,19 @@ class ansi():
                 background)
 
             if background in colors_list:
-                colors_list = colors_list.index(background)
+                bg_list_code = colors_list.index(background)
         else:
             bg_code = None
 
         if textColor != False:
             list_text_colors = [30, 31, 32, 33, 34, 35, 36, 37]
             textColor = textColor.lower()
+
             assert textColor in colors_list, "Error: The color \"{}\" is not in the list of colors.".format(
                 textColor)
 
             if textColor in colors_list:
-                colors_list = colors_list.index(textColor)
-        else:
-            fg_code = None
+                textColor_list_code = colors_list.index(textColor)
 
         style = 0
         if bold == True and underline == True:
@@ -50,12 +49,12 @@ class ansi():
         if background == False and textColor == False:
             return "\033[{}m{}\033[0m".format(style, text)
         elif background == False:
-            return "\033[{};{}m{}\033[0m".format(style, list_text_colors[colors_list], text)
+            return "\033[{};{}m{}\033[0m".format(style, list_text_colors[textColor_list_code], text)
         elif textColor == False:
-            return "\033[{};{}m{}\033[0m".format(style, list_background_colors[colors_list], text)
+            return "\033[{};{}m{}\033[0m".format(style, list_background_colors[bg_list_code], text)
         elif textColor != False and background != False:
-            return "\033[{};{};{}m{}\033[0m".format(style, list_text_colors[colors_list], list_background_colors[colors_list], text)
+            return "\033[{};{};{}m{}\033[0m".format(style, list_text_colors[textColor_list_code], list_background_colors[bg_list_code], text)
 
 
-text = ansi.color("test", 'red', False, False, False, True)
+text = ansi.color("test", "red", "yellow", True, True, False)
 print(text)

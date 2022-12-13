@@ -1,6 +1,4 @@
-class ansi():
-    color_reset = "\[\033[0m\]"
-
+class pythonColors():
     def color(text,
               textColor=False,
               background=False,
@@ -8,7 +6,8 @@ class ansi():
               underline=False,
               highlight=False
               ):
-
+        
+        color_reset = "\033[0m"
         colors_list = ["black", "red", "green",
                        "yellow", "blue", "purple",
                        "cyan", "white"]
@@ -23,7 +22,7 @@ class ansi():
             if background in colors_list:
                 bg_list_code = colors_list.index(background)
         else:
-            bg_code = None
+            bg_list_code = False
 
         if textColor != False:
             list_text_colors = [30, 31, 32, 33, 34, 35, 36, 37]
@@ -47,14 +46,15 @@ class ansi():
             style = "1;7"
         
         if background == False and textColor == False:
-            return "\033[{}m{}\033[0m".format(style, text)
+            return "\033[{style}m{txt}{reset}".format(style = style, txt = text, reset = color_reset)
         elif background == False:
-            return "\033[{};{}m{}\033[0m".format(style, list_text_colors[textColor_list_code], text)
+            return "\033[{style};{textColor}m{txt}{reset}".format(style = style, textColor = list_text_colors[textColor_list_code], txt = text, reset = color_reset)
         elif textColor == False:
-            return "\033[{};{}m{}\033[0m".format(style, list_background_colors[bg_list_code], text)
+            return "\033[{style};{bg}m{txt}{reset}".format(style = style, bg = list_background_colors[bg_list_code], txt = text, reset = color_reset)
         elif textColor != False and background != False:
-            return "\033[{};{};{}m{}\033[0m".format(style, list_text_colors[textColor_list_code], list_background_colors[bg_list_code], text)
+            return "\033[{style};{textColor};{bg}m{txt}{reset}".format(style = style, textColor = list_text_colors[textColor_list_code], bg = list_background_colors[bg_list_code], txt = text, reset = color_reset)
 
 
-text = ansi.color("test", "red", "yellow", True, True, False)
-print(text)
+
+print(pythonColors.color("test", False, "blue", False, False, False))
+print(pythonColors.color("test " + str(125), "blue", "yellow", True, True, False))

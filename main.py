@@ -7,6 +7,8 @@ class pythonColors():
               highlight=False
               ):
         
+        text = str(text)
+        
         color_reset = "\033[0m"
         colors_list = ["black", "red", "green",
                        "yellow", "blue", "purple",
